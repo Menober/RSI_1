@@ -17,18 +17,21 @@ public class clientRPC {
     public static void main(String[] args) throws XmlRpcException, IOException {
         IpAndPort ipAndPort = getIpAndPort();
         connectWithAServer("http://" + ipAndPort.ip, ipAndPort.port);
-        System.out.println(sendRequestForInitialMessage());
-        System.out.println("What do you want to choose?");
-        message = scanner.nextLine();
-        if (message.equals("getTime"))
-            System.out.println(sendRequestWithoutParams("getTime"));
-        if (message.equals("funcOne"))
-            System.out.println(sendRequestFuncOne());
-        if (message.equals("funcTwo"))
-            System.out.println(sendRequestFuncTwo());
-        if (message.equals("async"))
-            sendRequestAsync();
-
+        while (!message.equals("end")) {
+            System.out.println(sendRequestForInitialMessage());
+            System.out.println("What do you want to choose?");
+            message = scanner.nextLine();
+            if (message.equals("show"))
+                System.out.println(sendRequestWithoutParams("show"));
+            if (message.equals("getTime"))
+                System.out.println(sendRequestWithoutParams("getTime"));
+            if (message.equals("funcOne"))
+                System.out.println(sendRequestFuncOne());
+            if (message.equals("funcTwo"))
+                System.out.println(sendRequestFuncTwo());
+            if (message.equals("async"))
+                sendRequestAsync();
+        }
     }
 
     private static String sendRequestFuncOne() throws XmlRpcException, IOException {
@@ -41,6 +44,7 @@ public class clientRPC {
         return result.toString();
 
     }
+
     private static String sendRequestFuncTwo() throws XmlRpcException, IOException {
         Vector vector = new Vector();
         vector.addElement(scanner.nextLine());
@@ -51,13 +55,14 @@ public class clientRPC {
         return result.toString();
 
     }
+
     private static void sendRequestAsync() throws XmlRpcException, IOException {
         AC cb = new AC();
         Vector vector = new Vector();
         vector.addElement(scanner.nextLine());
         vector.addElement(scanner.nextLine());
         vector.addElement(scanner.nextLine());
-        client.executeAsync("Server.async", vector,cb);
+        client.executeAsync("Server.async", vector, cb);
 
     }
 
@@ -65,7 +70,7 @@ public class clientRPC {
         Vector vector = new Vector();
         for (int i = 0; i < paramsCount; i++)
             vector.addElement(scanner.nextLine());
-        Object result = client.execute("Server."+method, vector);
+        Object result = client.execute("Server." + method, vector);
 
         return result.toString();
 
