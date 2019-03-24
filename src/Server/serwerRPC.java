@@ -2,31 +2,79 @@ package Server;
 
 import org.apache.xmlrpc.WebServer;
 
+import java.util.Calendar;
+
 public class serwerRPC {
+    static WebServer webServer;
+    String asyncStringi="";
+
     public static void main(String[]args){
-        try{
-            System.out.println("Server start");
-            int port = 12345;
-            WebServer server = new WebServer(port);
-            server.addHandler("MyServer", new serwerRPC());
-            server.start();
-            System.out.println("Server ON");
-        }catch (Exception e){
-            e.printStackTrace();
+        runServer(12345);
+    }
+
+    private static void runServer(int port){
+        webServer = new WebServer(port);
+        webServer.addHandler("Server", new serwerRPC());
+        webServer.start();
+    }
+
+
+
+    private String createInitiateMessage() {
+        String text = "";
+        text+="Hello user. You has these method to use:\n";
+        text+="[1] String show()\n";
+        text+="[2] String funcOne(int a, String b, double c) - make a 'a' length tree from 'b' string and return result of multiply 'c' and number 2\n";
+        text+="[3] String funcTwo(String a, String b, int c) - take 'a' string and replace every character like first char of string 'b' for 'c' number\n";
+        text+="[4] String getTime() - returning current server time\n";
+        text+="[5] String async(String a, String b, String c) - returning sended to server 'c' strings concatenates at one\n";
+
+        return text;
+    }
+
+    public String show(){
+        return createInitiateMessage();
+    }
+
+    public String funcOne(int a, String b, double c){
+        String result = "";
+
+        for(int i=1;i<=a;i++){
+            result+=i+":";
+            for(int j=0;j<i;j++)
+                result+=b;
+            result+="\n";
         }
+        result+=c*2;
+        return result;
     }
-    public Integer echo(int x, int y){
-        return new Integer(x+y);
+
+    public String funcTwo(String a, String b, int c){
+        String result = "";
+
+        for(int i=0;i<a.length();i++){
+            if(a.charAt(i)==b.charAt(0))
+                result+=c;
+            else
+                result+=a.charAt(i);
+        }
+
+        return result;
     }
-    public int execAsy(int x){
-        System.out.println("odliczanie");
+
+    public String getTime(){
+        return Calendar.getInstance().getTime().toString();
+    }
+
+    public String async(String a, String b, String c){
+        System.out.println(a);
         try{
-            Thread.sleep(x);
+            Thread.sleep(Integer.valueOf(b));
         }catch (InterruptedException e){
             e.printStackTrace();
             Thread.currentThread().interrupt();
         }
-        System.out.println("Po odliczaniu");
-        return 123;
+        asyncStringi+=c+"|";
+        return asyncStringi;
     }
 }

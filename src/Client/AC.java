@@ -4,10 +4,11 @@ import org.apache.xmlrpc.AsyncCallback;
 
 import java.net.URL;
 
+//Krzysztof Miarczyński 238036
 public class AC implements AsyncCallback {
     @Override
     public void handleResult(Object result, URL url, String method) {
-        System.out.println("handleResult");
+        System.out.println(result.toString());
     }
 
     @Override
