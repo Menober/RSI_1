@@ -13,6 +13,6 @@ public class AC implements AsyncCallback {
 
     @Override
     public void handleError(Exception exception, URL url, String method) {
-        System.out.println("handleError");
+        exception.printStackTrace();
     }
 }

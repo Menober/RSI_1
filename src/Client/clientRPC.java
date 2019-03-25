@@ -59,9 +59,9 @@ public class clientRPC {
     private static void sendRequestAsync() throws XmlRpcException, IOException {
         AC cb = new AC();
         Vector vector = new Vector();
-        vector.addElement(scanner.nextLine());
-        vector.addElement(scanner.nextLine());
-        vector.addElement(scanner.nextLine());
+        vector.addElement(Integer.valueOf(scanner.nextLine()));
+        vector.addElement(Integer.valueOf(scanner.nextLine()));
+        vector.addElement(Integer.valueOf(scanner.nextLine()));
         client.executeAsync("Server.async", vector, cb);
 
     }

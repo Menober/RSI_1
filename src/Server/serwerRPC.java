@@ -3,6 +3,7 @@ package Server;
 import org.apache.xmlrpc.WebServer;
 
 import java.util.Calendar;
+import java.util.Random;
 
 public class serwerRPC {
     static WebServer webServer;
@@ -27,7 +28,7 @@ public class serwerRPC {
         text+="[2] String funcOne(int a, String b, double c) - make a 'a' length tree from 'b' string and return result of multiply 'c' and number 2\n";
         text+="[3] String funcTwo(String a, String b, int c) - take 'a' string and replace every character like first char of string 'b' for 'c' number\n";
         text+="[4] String getTime() - returning current server time\n";
-        text+="[5] String async(String a, String b, String c) - returning sended to server 'c' strings concatenates at one\n";
+        text+="[5] String async(int a, int b, int c) - rand form 'a' to 'b' and wait 'c'\n";
 
         return text;
     }
@@ -66,15 +67,14 @@ public class serwerRPC {
         return Calendar.getInstance().getTime().toString();
     }
 
-    public String async(String a, String b, String c){
-        System.out.println(a);
+    public String async(int a, int b, int c){
         try{
-            Thread.sleep(Integer.valueOf(b));
+            Thread.sleep(Integer.valueOf(c));
         }catch (InterruptedException e){
             e.printStackTrace();
             Thread.currentThread().interrupt();
         }
-        asyncStringi+=c+"|";
-        return asyncStringi;
+
+        return "Twoja liczba: "+(new Random().nextInt(b-a)+a);
     }
 }
