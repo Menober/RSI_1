@@ -28,7 +28,7 @@ public class serwerRPC {
         text+="[2] String funcOne(int a, String b, double c) - make a 'a' length tree from 'b' string and return result of multiply 'c' and number 2\n";
         text+="[3] String funcTwo(String a, String b, int c) - take 'a' string and replace every character like first char of string 'b' for 'c' number\n";
         text+="[4] String getTime() - returning current server time\n";
-        text+="[5] String async(int a, int b, int c) - rand form 'a' to 'b' and wait 'c'\n";
+        text+="[5] String async(int a, int b, int c) - prime numbers from 'a' to 'b' and wait 'c'\n";
 
         return text;
     }
@@ -74,7 +74,28 @@ public class serwerRPC {
             e.printStackTrace();
             Thread.currentThread().interrupt();
         }
+        String ret="";
+        while (a <= b) {
+            if(checkPrimeNumber(a))
+                ret+=a+", ";
 
-        return "Twoja liczba: "+(new Random().nextInt(b-a)+a);
+            ++a;
+        }
+
+        return "Twoje liczby: "+ret;
+    }
+
+    public static boolean checkPrimeNumber(int num) {
+        boolean flag = true;
+
+        for(int i = 2; i <= num/2; ++i) {
+
+            if(num % i == 0) {
+                flag = false;
+                break;
+            }
+        }
+
+        return flag;
     }
 }
